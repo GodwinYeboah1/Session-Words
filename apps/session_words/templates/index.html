@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Session Words</title>
+
+    <style>
+        .left_side{
+            margin-left: 20px;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .right_side{
+            margin-left:50px;
+            display: inline-block;
+        }        
+        .green{
+            color:green;
+        }
+        .red{
+            color:red
+        }
+        .blue{
+            color: blue;
+        }
+
+        .big {
+            font-size:  25px;
+        }
+        .normal{
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="add-words-layout left_side">
+            <form action="/add" method="post">
+                {% csrf_token %}
+                <input type="text" name="word"><br>
+                <label for="color">Choose color</label><br>
+                <input type="hidden" name="color" value="black">
+                Red<input type="radio" name="color" value="red">
+                Green<input type="radio" name="color" value="green">
+                Blue<input type="radio" name="color" value="blue"><br>
+                <label for="big">show in BIG fonts!</label>
+                <input type="hidden" name="big_font" value="normal">
+                <input type="checkbox" name="big_font" value="big"><br>
+                <input type="submit" value="Add to Session">
+            </form>
+        </div>
+        <div class="display-output-layout right_side">
+            <form action="/clear" method="get">
+                    {% csrf_token %}
+                <input type="submit" value="Clear session">
+            </form>
+            
+            <h2>Word Logs </h2>
+            {% for word in request.session.word_log %}
+                <p class=" {{word.color}} {{word.show_big}}">{{word.word}}   - <p>{{word.time}} </p></p>
+            {% endfor %} 
+        </div>
+    </div>
+  </body>
+</html>
+</body>
+</html>
